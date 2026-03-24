@@ -23,9 +23,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker.build("${DOCKER_HUB}/nextjs-app:latest")
-                }
+                sh "docker build -t ${DOCKER_HUB}/nextjs-app:latest ."
             }
         }
 
@@ -33,7 +31,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', 'dockerhub-creds') {
-                        docker.image("${DOCKER_HUB}/nextjs-app:latest").push()
+                        sh "docker push ${DOCKER_HUB}/nextjs-app:latest"
                     }
                 }
             }
