@@ -15,7 +15,7 @@ pipeline {
             steps {
                 sh 'corepack enable'
                 sh 'corepack prepare pnpm@latest --activate'
-                sh 'pnpm install --frozen-lockfile'
+                sh 'pnpm install'
             }
         }
 
