@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:lts'
-        }
-    }
+    agent any
 
     environment {
         DOCKER_HUB = "your-dockerhub-username"
