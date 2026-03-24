@@ -5,7 +5,7 @@ pipeline {
         }
     }
 
-    enviroment {
+    environment {
         DOCKER_HUB = "your-dockerhub-username"
     }
 
