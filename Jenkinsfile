@@ -6,11 +6,17 @@ pipeline {
     }
 
     stages {
+        stage('Install Node and Tools') {
+            steps {
+                sh 'curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -'
+                sh 'sudo apt-get install -y nodejs'
+                sh 'corepack enable'
+                sh 'corepack prepare pnpm@latest --activate'
+            }
+        }
 
         stage('Install Deps') {
             steps {
-                sh 'corepack enable'
-                sh 'corepack prepare pnpm@latest --activate'
                 sh 'pnpm install'
             }
         }
