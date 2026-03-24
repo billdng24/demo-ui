@@ -1,23 +1,20 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:lts'
+        }
+    }
 
     environment {
         DOCKER_HUB = "your-dockerhub-username"
     }
 
     stages {
-        stage('Install Node and Tools') {
-            steps {
-                sh 'curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -'
-                sh 'apt-get update && apt-get install -y nodejs'
-                sh 'corepack enable'
-                sh 'corepack prepare pnpm@latest --activate'
-            }
-        }
-
         stage('Install Deps') {
             steps {
-                sh 'pnpm install'
+                sh 'corepack enable'
+                sh 'corepack prepare pnpm@latest --activate'
+                sh 'pnpm install --frozen-lockfile'
             }
         }
 

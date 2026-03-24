@@ -1,9 +1,11 @@
 #build stage
 FROM node:lts as builder
 WORKDIR /app
+COPY package.json pnpm-lock.yaml ./
+RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN pnpm install --frozen-lockfile
 COPY . .
-RUN npm install
-RUN npm run build
+RUN pnpm build
 
 #run stage
 FROM node:18
