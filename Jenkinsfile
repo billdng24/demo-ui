@@ -1,39 +1,36 @@
 pipeline {
-    agent any
+    agent none
 
     environment {
         DOCKER_HUB = "your-dockerhub-username"
     }
 
     stages {
-        stage('Install Deps') {
+        stage('Install + Build Frontend') {
+            agent {
+                docker {
+                    image 'node:lts'
+                }
+            }
             steps {
                 sh 'corepack enable'
                 sh 'corepack prepare pnpm@latest --activate'
                 sh 'pnpm install --frozen-lockfile'
-            }
-        }
-
-        stage('Lint + Type Check') {
-            steps {
                 sh 'pnpm lint || true'
                 sh 'pnpm tsc'
-            }
-        }
-
-        stage('Build') {
-            steps {
                 sh 'pnpm build'
             }
         }
 
         stage('Build Docker Image') {
+            agent any
             steps {
                 sh 'docker build -t $DOCKER_HUB/nextjs-app:latest .'
             }
         }
 
         stage('Push Image') {
+            agent any
             steps {
                 sh 'docker push $DOCKER_HUB/nextjs-app:latest'
             }
