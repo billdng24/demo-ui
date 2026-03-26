@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Đàm Văn Nguyên basfsd</h1>
+      <h1>Đàm Văn Nguyên</h1>
       <h1>NextJS CI/CD Demo</h1>
       <pre>{JSON.stringify(data)}</pre>
     </div>
